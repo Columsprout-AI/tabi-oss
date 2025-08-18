@@ -1,0 +1,4 @@
+# Ignore the test-files folder inside backend
+test-files/
+dummy-S3/
+test-webhooks/

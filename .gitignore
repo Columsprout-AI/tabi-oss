@@ -1,0 +1,18 @@
+# deps & build outputs (both apps)
+**/node_modules/
+**/.next/
+**/.turbo/
+**/dist/
+**/build/
+**/coverage/
+
+# env files
+**/.env
+**/.env.local
+**/.env.*.local
+
+# misc
+.DS_Store
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*

@@ -1,0 +1,8 @@
+# Ignore the config file containing secrets
+# config.js
+
+# Node.js specific ignores
+node_modules/
+# .env
+
+cors.json

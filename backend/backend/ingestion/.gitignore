@@ -1,0 +1,5 @@
+# Node.js specific ignores
+node_modules/
+# .env
+controllers/LocaloutputPathController.js/
+controllers/LocalstartIngestionController.js/

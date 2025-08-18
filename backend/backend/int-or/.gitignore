@@ -1,0 +1,4 @@
+# Node.js specific ignores
+node_modules/
+controllers/uploadFileController.js/
+.env
