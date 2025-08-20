@@ -8,7 +8,7 @@ Auth, credits/payments, and exports are built in.
 
 ## 📹 Demo
 
-<video src="docs/tabi-demo.mp4" controls width="100%"></video>
+![Tabi demo](docs/tabi-demo.gif)
 
 ---
 
@@ -16,7 +16,7 @@ Auth, credits/payments, and exports are built in.
 
 -   `/frontend` - The Next.js app (handles Clerk auth, Redux, Razorpay, GA, and the upload UI).
 -   `/backend` - Contains all the microservices: `int-or` (gateway), `ingestion`, `experiment`, and `processing`.
--   `/docs` - Diagrams and assets (e.g., `architecture.svg`, demo video/gif).
+-   `/docs` - Diagrams and assets (e.g., `tabi-system-map.svg`, demo video/gif).
 
 The **frontend talks only to `int-or`** (the gateway). `int-or` coordinates:
 -   Signed URLs to upload CSVs to **GCS**.
@@ -29,20 +29,19 @@ The **frontend talks only to `int-or`** (the gateway). `int-or` coordinates:
 
 ---
 
-## 🤔 How Tabi works (non‑technical)
+## 🤔 How Tabi works
 
-1.  **Upload** — The browser gets a signed URL and uploads your CSV directly to Google Cloud Storage.
+1.  **Upload** — The browser gets a signed URL and uploads your CSV file directly to Google Cloud Storage.
 2.  **Pick a column** — Choose the column the model should read from (e.g., “description”).
 3.  **Preview** — Tabi runs your prompt on ~10 rows so you can inspect the output and tweak your instructions.
-4.  **Apply to all** — Tabi processes every row in the file; credits/tokens are tracked.
+4.  **Apply to all** — Tabi processes every row in the file; credits are calculated from tokens and cost.
 5.  **Download** — You get a secure, signed link to download the resulting CSV.
 
 ---
 
 ## 🗺️ System Map
 
-![Tabi — system architecture](docs/architecture.svg)
-
+![Tabi — system architecture](docs/tabi-system-map.svg)
 
 ---
 
@@ -56,7 +55,7 @@ From the repository root:
 
 ```bash
 docker compose up --build
-````
+```
 
 Services will be available at:
 
@@ -68,7 +67,7 @@ Services will be available at:
 
 ### Option B — Run Manually
 
-#### 1\. Backend
+#### 1. Backend
 
 Follow each service's README for environment keys and specific setup steps:
 
@@ -79,7 +78,7 @@ Follow each service's README for environment keys and specific setup steps:
 
 **Tip:** In `int-or`, set the `FRONTEND_WEBHOOK_URL` to your frontend's base URL (e.g., `http://localhost:3001`) so that callbacks for `/api/ingestion-update` and `/api/process-update` reach the UI.
 
-#### 2\. Frontend (Next.js)
+#### 2. Frontend (Next.js)
 
 ```bash
 cd frontend
@@ -92,9 +91,8 @@ Now, fill in the required values in your new `.env.local` file:
 # The base URL for the int-or gateway service
 NEXT_PUBLIC_API_URL=http://localhost:3000
 
-# Your Clerk credentials
+# Your Clerk publishable key
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...
-CLERK_SECRET_KEY=...
 
 # Optional keys
 NEXT_PUBLIC_RAZORPAY_KEY=...        # For enabling payments
@@ -112,7 +110,7 @@ The UI will be running at `http://localhost:3001`.
 
 -----
 
-## ⚙️ Deep Dive (For Engineers)
+## ⚙️ Deep Dive
 
 All frontend calls hit the `int-or` gateway:
 
@@ -125,10 +123,8 @@ All frontend calls hit the `int-or` gateway:
       - `POST /api/ingestion-update`
       - `POST /api/process-update`
 
-<!-- end list -->
-
-  - **Payments**: The frontend opens Razorpay Checkout, which hits `int-or` to create and verify the order. User credits are then updated in the SQL database.
-  - **Auth**: `int-or` consumes webhooks from Clerk to keep its user and session state in sync.
+- **Payments**: The frontend opens Razorpay Checkout, which hits `int-or` to create and verify the order. User credits are then updated in the SQL database.
+- **Auth**: `int-or` consumes webhooks from Clerk to keep its user and session state in sync.
 
 *For exact request/response bodies, see the service READMEs in the `/backend` directory.*
 
@@ -177,7 +173,7 @@ Ensure these are configured correctly for everything to work seamlessly:
 
 ## 💡 Contribute — Fun Challenge 🎯
 
-We love creative PRs\!
+We love creative PRs!
 
   - Solve a real market pain on top of Tabi (e.g., smart templates, a de-duplication/matching tool).
   - Build an agentic pipeline that plans the ingestion/preview/processing steps and can self-heal from JSON errors.

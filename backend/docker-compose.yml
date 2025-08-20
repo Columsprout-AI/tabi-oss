@@ -1,0 +1,58 @@
+version: "3.7"
+
+services:
+  int-or:
+    build:
+      context: ./int-or
+      dockerfile: Dockerfile
+    image: us-central1-docker.pkg.dev/tabi-app-450518/tabi-app/int-or:latest
+    container_name: int-or
+    environment:
+      NODE_ENV: "production"
+    env_file:
+      - ./int-or/.env
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  ingestion:
+    build:
+      context: ./ingestion
+      dockerfile: Dockerfile
+    image: us-central1-docker.pkg.dev/tabi-app-450518/tabi-app/ingestion:latest
+    container_name: ingestion
+    environment:
+      NODE_ENV: "production"
+    env_file:
+      - ./ingestion/.env
+    ports:
+      - "5001:5001"
+    restart: unless-stopped
+
+  experiment:
+    build:
+      context: ./experiment
+      dockerfile: Dockerfile
+    image: us-central1-docker.pkg.dev/tabi-app-450518/tabi-app/experiment:latest
+    container_name: experiment
+    environment:
+      NODE_ENV: "production"
+    env_file:
+      - ./experiment/.env
+    ports:
+      - "5002:5002"
+    restart: unless-stopped
+
+  processing:
+    build:
+      context: ./processing
+      dockerfile: Dockerfile
+    image: us-central1-docker.pkg.dev/tabi-app-450518/tabi-app/processing:latest
+    container_name: processing
+    environment:
+      NODE_ENV: "production"
+    env_file:
+      - ./processing/.env
+    ports:
+      - "5003:5003"
+    restart: unless-stopped

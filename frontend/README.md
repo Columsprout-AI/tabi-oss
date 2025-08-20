@@ -13,7 +13,7 @@ This folder contains the **Next.js 15 / React 19** client that talks to the back
 
 ## Quick links
 
-- **Local dev:** FE on **:4000**, BE on **:3000**  
+- **Local dev:** FE on **:3001**, BE on **:3000**  
 - **FE API base:** `${NEXT_PUBLIC_API_URL}/api/intor`  
   (With `NEXT_PUBLIC_API_URL=http://localhost:3000`, calls hit `http://localhost:3000/api/intor/...`)
 
@@ -69,7 +69,7 @@ Follow `backend/README.md` (compose or bare node). Default: `http://localhost:30
 cd frontend
 pnpm install
 pnpm dev
-# http://localhost:4000
+# http://localhost:3001
 ```
 
 Make sure `NEXT_PUBLIC_API_URL` points to the backend.
@@ -267,7 +267,7 @@ If you introduce another SDK, **extend CSP** accordingly.
 ## Scripts
 
 ```bash
-pnpm dev      # next dev -p 4000 --turbopack
+pnpm dev      # next dev -p 3001 --turbopack
 pnpm build    # next build
 pnpm start    # next start
 pnpm lint
